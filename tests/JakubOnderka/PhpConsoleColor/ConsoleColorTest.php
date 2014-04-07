@@ -38,6 +38,12 @@ class ConsoleColorTest extends \PHPUnit_Framework_TestCase
         $this->uut = new ConsoleColorWithForceSupport();
     }
 
+    public function testNone()
+    {
+        $output = $this->uut->apply('none', 'text');
+        $this->assertEquals("text", $output);
+    }
+
     public function testBold()
     {
         $output = $this->uut->apply('bold', 'text');

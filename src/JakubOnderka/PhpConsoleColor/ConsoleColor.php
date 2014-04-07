@@ -8,6 +8,8 @@ class ConsoleColor
 
     const COLOR256_REGEXP = '~^(bg_)?color_([0-9]{1,3})$~';
 
+    const RESET_STYLE = 0;
+
     /** @var bool */
     private $isSupported;
 
@@ -16,7 +18,7 @@ class ConsoleColor
 
     /** @var array */
     private $styles = array(
-        'reset' => '0',
+        'none' => null,
         'bold' => '1',
         'dark' => '2',
         'italic' => '3',
@@ -112,7 +114,7 @@ class ConsoleColor
             return $text;
         }
 
-        return $this->escSequence(implode(';', $sequences)) . $text . $this->escSequence($this->styles['reset']);
+        return $this->escSequence(implode(';', $sequences)) . $text . $this->escSequence(self::RESET_STYLE);
     }
 
     /**
@@ -235,7 +237,7 @@ class ConsoleColor
      */
     private function styleSequence($style)
     {
-        if (isset($this->styles[$style])) {
+        if (array_key_exists($style, $this->styles)) {
             return $this->styles[$style];
         }
 
@@ -257,7 +259,7 @@ class ConsoleColor
      */
     private function isValidStyle($style)
     {
-        return isset($this->styles[$style]) || preg_match(self::COLOR256_REGEXP, $style);
+        return array_key_exists($style, $this->styles) || preg_match(self::COLOR256_REGEXP, $style);
     }
 
     /**
