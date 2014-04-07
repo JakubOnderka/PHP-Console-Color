@@ -127,6 +127,17 @@ class ConsoleColorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("\033[1;2;3mtext\033[0m", $output);
     }
 
+    public function testHasAndRemoveTheme()
+    {
+        $this->assertFalse($this->uut->hasTheme('bold_dark'));
+
+        $this->uut->addTheme('bold_dark', array('bold', 'dark'));
+        $this->assertTrue($this->uut->hasTheme('bold_dark'));
+
+        $this->uut->removeTheme('bold_dark');
+        $this->assertFalse($this->uut->hasTheme('bold_dark'));
+    }
+
     public function testApplyInvalidArgument()
     {
         $this->setExpectedException('\InvalidArgumentException');
