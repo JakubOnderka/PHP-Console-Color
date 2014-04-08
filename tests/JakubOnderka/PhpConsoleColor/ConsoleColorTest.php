@@ -174,5 +174,11 @@ class ConsoleColorTest extends \PHPUnit_Framework_TestCase
         $this->uut->setForceStyle(true);
         $this->assertTrue($this->uut->isStyleForced());
     }
+
+    public function testGetPossibleStyles()
+    {
+        $this->assertInternalType('array', $this->uut->getPossibleStyles());
+        $this->assertNotEmpty($this->uut->getPossibleStyles());
+    }
 }
 
