@@ -11,4 +11,5 @@ before_script:
 
 script:
   - ant phplint
+  - ant phpcs
   - ant phpunit

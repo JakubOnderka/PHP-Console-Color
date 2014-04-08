@@ -54,7 +54,7 @@
 
         <exec executable="${phpcs}">
             <arg line='--extensions=php' />
-            <arg line='--standard="${basedir}/vendor/proofreason/php-code-style/cs-ruleset.xml"' />
+            <arg line='--standard="${basedir}/vendor/jakub-onderka/php-code-style/ruleset.xml"' />
             <arg line='--report-checkstyle="${basedir}/build/logs/checkstyle.xml"' />
             <arg line='--report-full' />
             <arg line='"${basedir}/src"' />
