@@ -195,7 +195,6 @@ class ConsoleColor
         unset($this->themes[$name]);
     }
 
-
     /**
      * @return bool
      */
@@ -214,6 +213,14 @@ class ConsoleColor
     public function are256ColorsSupported()
     {
         return DIRECTORY_SEPARATOR === '/' && strpos(getenv('TERM'), '256color') !== false;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPossibleStyles()
+    {
+        return array_keys($this->styles);
     }
 
     /**
