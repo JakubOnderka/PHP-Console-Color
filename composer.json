@@ -1,7 +1,6 @@
 {
     "name": "jakub-onderka/php-console-color",
     "license": "BSD-2-Clause",
-    "version": "0.1",
     "authors": [
         {
             "name": "Jakub Onderka",
