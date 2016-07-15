@@ -7,10 +7,18 @@ php:
   - 5.6
   - 7.0
   - hhvm
+  
+sudo: false
+
+cache:
+  directories:
+    - vendor
+    - $HOME/.composer/cache
 
 before_script:
-  - composer self-update
-  - composer install --no-interaction --prefer-source --dev
+  - if [ "$TRAVIS_PHP_VERSION" == "5.3.3" ]; then composer config disable-tls true; fi
+  - if [ "$TRAVIS_PHP_VERSION" == "5.3.3" ]; then composer config secure-http false; fi
+  - composer install --no-interaction --prefer-source
 
 script:
   - ant phplint
