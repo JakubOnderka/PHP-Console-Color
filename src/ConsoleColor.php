@@ -248,7 +248,7 @@ class ConsoleColor
             return $this->styles[$style];
         }
 
-        if (!$this->are256ColorsSupported()) {
+        if (!$this->isStyleForced() && !$this->are256ColorsSupported()) {
             return null;
         }
 
