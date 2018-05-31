@@ -201,10 +201,15 @@ class ConsoleColor
     public function isSupported()
     {
         if (DIRECTORY_SEPARATOR === '\\') {
-            return getenv('ANSICON') !== false || getenv('ConEmuANSI') === 'ON';
+            if (function_exists('sapi_windows_vt100_support') && @sapi_windows_vt100_support(STDOUT)) {
+                return true;
+            } elseif (getenv('ANSICON') !== false || getenv('ConEmuANSI') === 'ON') {
+                return true;
+            }
+            return false;
+        } else {
+            return function_exists('posix_isatty') && @posix_isatty(STDOUT);
         }
-
-        return function_exists('posix_isatty') && @posix_isatty(STDOUT);
     }
 
     /**
@@ -212,7 +217,11 @@ class ConsoleColor
      */
     public function are256ColorsSupported()
     {
-        return DIRECTORY_SEPARATOR === '/' && strpos(getenv('TERM'), '256color') !== false;
+        if (DIRECTORY_SEPARATOR === '\\') {
+            return function_exists('sapi_windows_vt100_support') && @sapi_windows_vt100_support(STDOUT);
+        } else {
+            return strpos(getenv('TERM'), '256color') !== false;
+        }
     }
 
     /**
