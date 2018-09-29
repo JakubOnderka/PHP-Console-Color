@@ -225,8 +225,7 @@ class ConsoleColor
 
     /**
      * @param string $name
-     * @return string
-     * @throws InvalidStyleException
+     * @return string[]
      */
     private function themeSequence($name)
     {
@@ -240,7 +239,6 @@ class ConsoleColor
     /**
      * @param string $style
      * @return string
-     * @throws InvalidStyleException
      */
     private function styleSequence($style)
     {
