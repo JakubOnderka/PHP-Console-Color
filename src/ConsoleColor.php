@@ -1,4 +1,5 @@
 <?php
+
 namespace JakubOnderka\PhpConsoleColor;
 
 class ConsoleColor
@@ -87,10 +88,10 @@ class ConsoleColor
             return $text;
         }
 
-        if (is_string($style)) {
+        if (\is_string($style)) {
             $style = array($style);
         }
-        if (!is_array($style)) {
+        if (!\is_array($style)) {
             throw new \InvalidArgumentException('Style must be string or array.');
         }
 
@@ -98,7 +99,7 @@ class ConsoleColor
 
         foreach ($style as $s) {
             if (isset($this->themes[$s])) {
-                $sequences = array_merge($sequences, $this->themeSequence($s));
+                $sequences = \array_merge($sequences, $this->themeSequence($s));
             } else if ($this->isValidStyle($s)) {
                 $sequences[] = $this->styleSequence($s);
             } else {
@@ -106,7 +107,7 @@ class ConsoleColor
             }
         }
 
-        $sequences = array_filter($sequences, function ($val) {
+        $sequences = \array_filter($sequences, function ($val) {
             return $val !== null;
         });
 
@@ -114,7 +115,7 @@ class ConsoleColor
             return $text;
         }
 
-        return $this->escSequence(implode(';', $sequences)) . $text . $this->escSequence(self::RESET_STYLE);
+        return $this->escSequence(\implode(';', $sequences)) . $text . $this->escSequence(self::RESET_STYLE);
     }
 
     /**
@@ -154,10 +155,10 @@ class ConsoleColor
      */
     public function addTheme($name, $styles)
     {
-        if (is_string($styles)) {
+        if (\is_string($styles)) {
             $styles = array($styles);
         }
-        if (!is_array($styles)) {
+        if (!\is_array($styles)) {
             throw new \InvalidArgumentException('Style must be string or array.');
         }
 
@@ -209,14 +210,14 @@ class ConsoleColor
     protected function checkIfTerminalColorIsSupported()
     {
         if (DIRECTORY_SEPARATOR === '\\') {
-            if (function_exists('sapi_windows_vt100_support') && @sapi_windows_vt100_support(STDOUT)) {
+            if (\function_exists('sapi_windows_vt100_support') && @\sapi_windows_vt100_support(STDOUT)) {
                 return true;
-            } elseif (getenv('ANSICON') !== false || getenv('ConEmuANSI') === 'ON') {
+            } elseif (\getenv('ANSICON') !== false || \getenv('ConEmuANSI') === 'ON') {
                 return true;
             }
             return false;
         } else {
-            return function_exists('posix_isatty') && @posix_isatty(STDOUT);
+            return \function_exists('posix_isatty') && @\posix_isatty(STDOUT);
         }
     }
 
@@ -226,9 +227,9 @@ class ConsoleColor
     public function are256ColorsSupported()
     {
         if (DIRECTORY_SEPARATOR === '\\') {
-            return function_exists('sapi_windows_vt100_support') && @sapi_windows_vt100_support(STDOUT);
+            return \function_exists('sapi_windows_vt100_support') && @\sapi_windows_vt100_support(STDOUT);
         } else {
-            return strpos(getenv('TERM'), '256color') !== false;
+            return \strpos(\getenv('TERM'), '256color') !== false;
         }
     }
 
@@ -237,7 +238,7 @@ class ConsoleColor
      */
     public function getPossibleStyles()
     {
-        return array_keys($this->styles);
+        return \array_keys($this->styles);
     }
 
     /**
@@ -259,7 +260,7 @@ class ConsoleColor
      */
     private function styleSequence($style)
     {
-        if (array_key_exists($style, $this->styles)) {
+        if (\array_key_exists($style, $this->styles)) {
             return $this->styles[$style];
         }
 
@@ -267,7 +268,7 @@ class ConsoleColor
             return null;
         }
 
-        preg_match(self::COLOR256_REGEXP, $style, $matches);
+        \preg_match(self::COLOR256_REGEXP, $style, $matches);
 
         $type = $matches[1] === 'bg_' ? self::BACKGROUND : self::FOREGROUND;
         $value = $matches[2];
@@ -281,7 +282,7 @@ class ConsoleColor
      */
     private function isValidStyle($style)
     {
-        return array_key_exists($style, $this->styles) || preg_match(self::COLOR256_REGEXP, $style);
+        return \array_key_exists($style, $this->styles) || \preg_match(self::COLOR256_REGEXP, $style);
     }
 
     /**
