@@ -71,7 +71,7 @@ class ConsoleColor
 
     public function __construct()
     {
-        $this->isSupported = $this->isSupported();
+        $this->isSupported = $this->checkIfTerminalColorIsSupported();
     }
 
     /**
@@ -199,6 +199,14 @@ class ConsoleColor
      * @return bool
      */
     public function isSupported()
+    {
+        return $this->isSupported;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function checkIfTerminalColorIsSupported()
     {
         if (DIRECTORY_SEPARATOR === '\\') {
             if (function_exists('sapi_windows_vt100_support') && @sapi_windows_vt100_support(STDOUT)) {
