@@ -91,7 +91,7 @@ class ConsoleColor
             $style = array($style);
         }
         if (!is_array($style)) {
-            throw new \InvalidArgumentException("Style must be string or array.");
+            throw new \InvalidArgumentException('Style must be string or array.');
         }
 
         $sequences = array();
@@ -158,7 +158,7 @@ class ConsoleColor
             $styles = array($styles);
         }
         if (!is_array($styles)) {
-            throw new \InvalidArgumentException("Style must be string or array.");
+            throw new \InvalidArgumentException('Style must be string or array.');
         }
 
         foreach ($styles as $style) {
