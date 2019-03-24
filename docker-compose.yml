@@ -1,0 +1,17 @@
+version: '3.2'
+volumes:
+  app:
+
+services:
+  &app-service app:
+    image: dralec/php-cli-alpine
+    hostname: *app-service
+    user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
+    volumes:
+    - /etc/passwd:/etc/passwd:ro
+    - /etc/group:/etc/group:ro
+    - ./:/var/www
+    - ./../../libraries:/var/packages
+    environment:
+      DOCKER_TERM: "$TERM"
+    command: keep-alive.sh
