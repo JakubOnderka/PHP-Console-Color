@@ -4,7 +4,7 @@ volumes:
 
 services:
   &app-service app:
-    image: dralec/php-cli-alpine
+    image: dralec/php5.6-cli-stretch
     hostname: *app-service
     user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
     volumes:
