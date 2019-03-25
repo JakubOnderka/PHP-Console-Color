@@ -95,7 +95,7 @@ class ConsoleColor
         foreach ($styles as $s) {
             if (isset($this->themes[$s])) {
                 $sequences[] = $this->themeSequence($s);
-            } else if ($this->isValidStyle($s)) {
+            } else if ($this->isValid($s)) {
                 $sequences[][] = $this->styleSequence($s);
             } else {
                 throw new InvalidStyleException($s);
@@ -156,7 +156,7 @@ class ConsoleColor
         $styles = $this->refineStyles($styles);
 
         foreach ($styles as $style) {
-            if (!$this->isValidStyle($style)) {
+            if (!$this->isValid($style)) {
                 throw new InvalidStyleException($style);
             }
         }
@@ -273,7 +273,7 @@ class ConsoleColor
      * @param string $style
      * @return bool
      */
-    private function isValidStyle($style)
+    private function isValid($style)
     {
         return \array_key_exists($style, $this->styles) || \preg_match(self::COLOR256_REGEXP, $style);
     }
