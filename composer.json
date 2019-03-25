@@ -18,6 +18,7 @@
         "jakub-onderka/php-parallel-lint": "1.0",
         "jakub-onderka/php-var-dump-check": "0.*",
         "squizlabs/php_codesniffer": "1.*",
-        "jakub-onderka/php-code-style": "1.0"
+        "jakub-onderka/php-code-style": "1.0",
+        "kylekatarnls/multi-tester": "^1.1"
     }
 }

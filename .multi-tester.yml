@@ -1,0 +1,7 @@
+jakub-onderka/php-console-highlighter:
+  install: default
+  script: default
+
+alecrabbit/php-console-colour:
+  install: default
+  script: default
