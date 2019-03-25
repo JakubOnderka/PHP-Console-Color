@@ -113,7 +113,7 @@ class ConsoleColor
             return $text;
         }
 
-        return $this->escSequence(\implode(';', $sequences)) . $text . $this->escSequence(self::RESET_STYLE);
+        return $this->applySequences($text, $sequences);
     }
 
     /**
@@ -250,7 +250,7 @@ class ConsoleColor
 
     /**
      * @param string $style
-     * @return string
+     * @return null|string
      */
     private function styleSequence($style)
     {
@@ -281,7 +281,7 @@ class ConsoleColor
     }
 
     /**
-     * @param string|int $value
+     * @param string $value
      * @return string
      */
     private function escSequence($value)
@@ -290,7 +290,7 @@ class ConsoleColor
     }
 
     /**
-     * @param $styles
+     * @param string|array $styles
      * @return array|string
      */
     protected function refineStyles($styles)
@@ -298,9 +298,31 @@ class ConsoleColor
         if (\is_string($styles)) {
             $styles = [$styles];
         }
+        $this->assertStyles($styles);
+        return $styles;
+
+    }
+
+    /**
+     * @param mixed $styles
+     */
+    protected function assertStyles($styles)
+    {
         if (!\is_array($styles)) {
             throw new \InvalidArgumentException('Style must be string or array.');
         }
-        return $styles;
+    }
+
+    /**
+     * @param $text
+     * @param array $sequences
+     * @return string
+     */
+    protected function applySequences($text, array $sequences)
+    {
+        return
+            $this->escSequence(\implode(';', $sequences)) .
+            $text .
+            $this->escSequence((string)self::RESET_STYLE);
     }
 }
