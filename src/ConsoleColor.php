@@ -314,11 +314,11 @@ class ConsoleColor
     }
 
     /**
-     * @param $text
+     * @param string $text
      * @param array $sequences
      * @return string
      */
-    protected function applySequences($text, array $sequences)
+    protected function applySequences($text, $sequences)
     {
         return
             $this->escSequence(\implode(';', $sequences)) .
