@@ -258,6 +258,7 @@ class ConsoleColor
             return $this->styles[$style];
         }
 
+        // todo this is a weak spot
         if (!$this->are256ColorsSupported()) {
             return null;
         }
