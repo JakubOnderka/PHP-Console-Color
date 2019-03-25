@@ -133,6 +133,7 @@ class ConsoleColor
     }
 
     /**
+     * todo move setting themes to constructor in future versions
      * @param array $themes
      * @throws InvalidStyleException
      * @throws \InvalidArgumentException
