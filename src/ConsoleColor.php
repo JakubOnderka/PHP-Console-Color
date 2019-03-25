@@ -76,28 +76,23 @@ class ConsoleColor
     }
 
     /**
-     * @param string|array $style
+     * @param string|array $styles
      * @param string $text
      * @return string
      * @throws InvalidStyleException
      * @throws \InvalidArgumentException
      */
-    public function apply($style, $text)
+    public function apply($styles, $text)
     {
-        if (!$this->isStyleForced() && !$this->isSupported()) {
+        if (!$this->isSupported() && !$this->isStyleForced()) {
             return $text;
         }
 
-        if (\is_string($style)) {
-            $style = array($style);
-        }
-        if (!\is_array($style)) {
-            throw new \InvalidArgumentException('Style must be string or array.');
-        }
+        $styles = $this->refineStyles($styles);
 
         $sequences = array(array());
 
-        foreach ($style as $s) {
+        foreach ($styles as $s) {
             if (isset($this->themes[$s])) {
                 $sequences[] = $this->themeSequence($s);
             } else if ($this->isValidStyle($s)) {
@@ -158,12 +153,7 @@ class ConsoleColor
      */
     public function addTheme($name, $styles)
     {
-        if (\is_string($styles)) {
-            $styles = array($styles);
-        }
-        if (!\is_array($styles)) {
-            throw new \InvalidArgumentException('Style must be string or array.');
-        }
+        $styles = $this->refineStyles($styles);
 
         foreach ($styles as $style) {
             if (!$this->isValidStyle($style)) {
@@ -295,5 +285,20 @@ class ConsoleColor
     private function escSequence($value)
     {
         return "\033[{$value}m";
+    }
+
+    /**
+     * @param $styles
+     * @return array|string
+     */
+    protected function refineStyles($styles)
+    {
+        if (\is_string($styles)) {
+            $styles = [$styles];
+        }
+        if (!\is_array($styles)) {
+            throw new \InvalidArgumentException('Style must be string or array.');
+        }
+        return $styles;
     }
 }
